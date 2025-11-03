@@ -14,12 +14,11 @@ public class Enemy : MonoBehaviour
     Transform oldTransform;
 
 
-    public int sameColor = 0;
-    //bool touchingPlayer = false;
     bool didAttach = false;
     bool shouldAttach = false;
-
     bool touchingPlayer = false;
+
+    public bool destroyed = false;
 
 
     // Start is called before the first frame update
@@ -54,7 +53,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("collided");
 
         // if the colors are the same
-        if (other.gameObject.tag == tag)
+        if (other.gameObject.tag == tag && !destroyed)
         {
             Debug.Log("Same type");
             //check to see if im in a list already BY
@@ -72,6 +71,7 @@ public class Enemy : MonoBehaviour
                     if (other.gameObject == g)
                     {
                         //i should get in the list
+                        Debug.Log("I should attach");
                         shouldAttach = true;
                     }
                 }
@@ -82,14 +82,17 @@ public class Enemy : MonoBehaviour
                     listOfStrings.Add(gameObject);
                     Debug.Log("added to prev list");
                     didAttach = true;
+                    shouldAttach = false;
                 }
 
                 //if more than 2 guys in the list
-                if (listOfStrings.Count == 3)
+                if (listOfStrings.Count >= 3)
                 {
+                    
                     for (int i = 0; i < listOfStrings.Count; i++)
                     {
                         //explode 
+                        destroyed = true;
                         Destroy(listOfStrings[i].GameObject());
                         Debug.Log("destoryyyy");
                     }
