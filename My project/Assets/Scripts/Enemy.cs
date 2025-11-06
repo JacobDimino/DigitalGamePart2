@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -19,6 +21,8 @@ public class Enemy : MonoBehaviour
     bool touchingPlayer = false;
 
     public bool destroyed = false;
+
+    public bool linked = false;
 
 
     // Start is called before the first frame update
@@ -41,6 +45,16 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        //if hit the death zone at attached
+        if (other.gameObject.tag == "DeathZone" && linked)
+        {
+            SceneManager.LoadSceneAsync(2);//probably need to call a method to indicate to all that on collide exit to not worry about it 
+        }
+        //move on past the deathzone
+        else if (other.gameObject.tag == "DeathZone")
+        {
+            return;
+        }
         //stops as soon as it hits something
         speed = 0;
         transform.parent = player.transform;
@@ -51,6 +65,7 @@ public class Enemy : MonoBehaviour
         }
         
         Debug.Log("collided");
+        linked = true;
 
         // if the colors are the same
         if (other.gameObject.tag == tag && !destroyed)
@@ -104,7 +119,6 @@ public class Enemy : MonoBehaviour
                 //OTHERWISE
                 //add self to orb strings
                 manager.orbStrings.Add(new List<GameObject> { gameObject });
-
                 Debug.Log("added new list w self");
             }
         }
@@ -116,6 +130,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("EXIT COLLID");
         speed = 2;
         transform.parent = oldTransform;
+        linked = false; 
     }
 
 }
