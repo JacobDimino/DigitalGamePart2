@@ -1901,8 +1901,8 @@ Transform:
   m_GameObject: {fileID: 1351693794}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.81, z: 5}
-  m_LocalScale: {x: 0.32825, y: 0.32825, z: 0.32825}
+  m_LocalPosition: {x: 0, y: -1.72, z: 5}
+  m_LocalScale: {x: 0.29952812, y: 0.32825, z: 0.32825}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2083,6 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allOrbs: []
+  gameOver: 0
 --- !u!4 &1809096036
 Transform:
   m_ObjectHideFlags: 0

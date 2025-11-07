@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -23,6 +24,7 @@ public class Enemy : MonoBehaviour
     public bool destroyed = false;
 
     public bool linked = false;
+    public bool gamedOver = false;
 
 
     // Start is called before the first frame update
@@ -45,10 +47,11 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        //if hit the death zone at attached
+        //if hit the death zone and attached, send message to manager that we lost
         if (other.gameObject.tag == "DeathZone" && linked)
         {
-            SceneManager.LoadSceneAsync(2);//probably need to call a method to indicate to all that on collide exit to not worry about it 
+            manager.gameOver = true;
+            //SceneManager.LoadSceneAsync(2);//probably need to call a method to indicate to all that on collide exit to not worry about it 
         }
         //move on past the deathzone
         else if (other.gameObject.tag == "DeathZone")
@@ -127,10 +130,18 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log("EXIT COLLID");
-        speed = 2;
-        transform.parent = oldTransform;
-        linked = false; 
+        if (linked)
+        {
+            if (gamedOver)
+            {
+                return;
+            }
+
+            Debug.Log("EXIT COLLID");
+            speed = 2;
+            transform.parent = oldTransform;
+            linked = false;
+        }
     }
 
 }
