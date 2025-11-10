@@ -38,4 +38,28 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public void PlayRandomSfxClip(AudioClip[] audioClip, Transform spawnTransform, float volume)
+    {
+        //assign a random index 
+        int rand = Random.Range(0, audioClip.Length);
+
+        //spawn in gameobject
+        AudioSource audioSource = Instantiate(sound, spawnTransform.position, Quaternion.identity);
+
+        //assign the clip
+        audioSource.clip = audioClip[rand];
+
+        //assign volume
+        audioSource.volume = volume;
+
+        //play sound
+        audioSource.Play();
+
+        //length of sound clip
+        float clipLength = audioSource.clip.length;
+
+        //destory after clip is done playing
+        Destroy(audioSource.gameObject, clipLength);
+
+    }
 }

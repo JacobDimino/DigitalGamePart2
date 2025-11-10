@@ -26,12 +26,14 @@ public class Enemy : MonoBehaviour
     public bool linked = false;
     public bool gamedOver = false;
 
+    AudioClip[] deathSFXs;
 
     // Start is called before the first frame update
     void Start()
     {
        player = FindObjectOfType<Player>();
        manager = FindAnyObjectByType<Manager>();
+       deathSFXs = FindAnyObjectByType<Spawner>().deathSFXs;
        Transform oldTransform = transform.parent;
     }
 
@@ -106,7 +108,9 @@ public class Enemy : MonoBehaviour
                 //if more than 2 guys in the list
                 if (listOfStrings.Count >= 3)
                 {
-                    
+                    //play a destroyed sound
+                    SoundManager.instance.PlayRandomSfxClip(deathSFXs, transform, 1f);
+
                     for (int i = 0; i < listOfStrings.Count; i++)
                     {
                         //explode 

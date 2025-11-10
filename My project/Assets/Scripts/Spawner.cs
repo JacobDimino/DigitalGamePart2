@@ -6,6 +6,8 @@ public class Spawner : MonoBehaviour
 {
     public Transform[] spawnPoints;
     [SerializeField] GameObject[] colors;
+    [SerializeField] private AudioClip[] spawnSFXs;
+    [SerializeField] public AudioClip[] deathSFXs;
 
     Manager manager;
 
@@ -23,10 +25,17 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //check to see if we should spawn
         if (Time.time > nextSpawnTime)
         {
-            //get a random color object and spawn it at a random spawn point
-            manager.allOrbs.Add(Instantiate(colors[Random.Range(0, colors.Length)], spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity));
+            SoundManager.instance.PlayRandomSfxClip(spawnSFXs, transform, 1f);
+
+            //should make it a function called spawn but im lazy
+            //get a random enemy object and spawn it at a random spawn point
+            manager.allOrbs.Add(Instantiate(colors[Random.Range(0, colors.Length)], 
+                spawnPoints[Random.Range(0, spawnPoints.Length)].position, Quaternion.identity));
+
+
             nextSpawnTime = Time.time + timeBetweenSpawns;
         }
     }
