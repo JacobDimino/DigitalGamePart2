@@ -24,7 +24,6 @@ public class Enemy : MonoBehaviour
     public bool destroyed = false;
 
     public bool linked = false;
-    public bool gamedOver = false;
 
     AudioClip[] deathSFXs;
 
@@ -136,7 +135,7 @@ public class Enemy : MonoBehaviour
     {
         if (linked)
         {
-            if (gamedOver)
+            if (manager.gameOver)
             {
                 return;
             }

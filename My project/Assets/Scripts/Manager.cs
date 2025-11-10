@@ -23,14 +23,6 @@ public class Manager : MonoBehaviour
     {
         if (gameOver)
         {
-            foreach (GameObject orb in allOrbs)
-            {
-                if (orb.gameObject.GetComponent<Enemy>() != null)
-                {
-                    orb.gameObject.GetComponent<Enemy>().gamedOver = true;
-                }
-            }
-
             SceneManager.LoadSceneAsync(2);
         }
     }
