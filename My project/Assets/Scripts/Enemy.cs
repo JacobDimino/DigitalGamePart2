@@ -102,8 +102,6 @@ public class Enemy : MonoBehaviour
                 //if more than 2 guys in the list
                 if (listOfStrings.Count >= 3)
                 {
-                    //play a destroyed sound
-                    SoundManager.instance.PlayRandomSfxClip(deathSFXs, transform, 1f);
 
                     for (int i = 0; i < listOfStrings.Count; i++)
                     {
@@ -113,6 +111,7 @@ public class Enemy : MonoBehaviour
                         Debug.Log("destoryyyy");
                     }
                 }
+
             }
 
             if (!didAttach)
@@ -128,6 +127,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
+
         if (linked)
         {
             if (manager.gameOver)
@@ -139,7 +139,9 @@ public class Enemy : MonoBehaviour
             speed = 2;
             transform.parent = oldTransform;
             linked = false;
+
+            //play a destroyed sound
+            SoundManager.instance.PlayRandomSfxClip(deathSFXs, transform, 1f);
         }
     }
-
 }
